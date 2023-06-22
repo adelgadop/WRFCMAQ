@@ -18,16 +18,16 @@ cd CMAQ_REPO
 git checkout -b my_branch
 
 #> Considerations
-HOME=/home/alejandro
+export DIR="/opt/comp_ifort_2021"
 
 #> Building and running in a user-specified directory outside of the repository
  # In the top level of CMAQ_REPO, the bldit_project.csh script will automatically replicate
  # the CMAQ folder structure and copy every build and run script out of the repository so
  # that you may modify them freely without version control.
 
-sed -i 's: set CMAQ_HOME = /home/username/path: set CMAQ_HOME = ${HOME}/WRF4.4CMAQv5.4:' bldit_project.csh
+sed -i 's: set CMAQ_HOME = /home/username/path: set CMAQ_HOME = ${HOME}/WRFCMAQ:' bldit_project.csh
 ./bldit_project.csh
-export CMAQ_HOME="${HOME}/WRF4.4CMAQv5.4"
+export CMAQ_HOME="${HOME}/WRFCMAQ"
 cd $CMAQ_HOME
 
 #> Setting and fixing config_cmaq.csh
@@ -51,8 +51,8 @@ cd $CMAQ_HOME
  sed -i 's:netcdf_inc_intel:${NETCDF}/include:' config_cmaq.csh
  sed -i 's:netcdff_lib_intel:${NETCDF}/lib:' config_cmaq.csh
  sed -i 's:netcdff_inc_intel:${NETCDF}/include:' config_cmaq.csh
- sed -i 's:mpi_incl_intel:${HOME}/Build_CMAQ/LIBRARIES/mpich/include:' config_cmaq.csh
- sed -i 's:mpi_lib_intel:${HOME}/Build_CMAQ/LIBRARIES/mpich/lib:' config_cmaq.csh
+ sed -i 's:mpi_incl_intel:${DIR}/mpich/include:' config_cmaq.csh
+ sed -i 's:mpi_lib_intel:${DIR}/mpich/lib:' config_cmaq.csh
  sed -i 's:setenv myFC mpiifort:setenv myFC mpifort:' config_cmaq.csh
 
 #> Compiling WRF-CMAQ
