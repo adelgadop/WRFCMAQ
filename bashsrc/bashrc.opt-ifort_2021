@@ -1,0 +1,70 @@
+# Endereço das Libs (compiladas com ifort 2021)
+export BUILD_LIBS="/opt/comp_ifort_2021"
+
+# variaveis de ambiente para ifort e icc **64 BITS** 21
+#source /opt/intel/oneapi/setvars.sh
+export PATH="/opt/intel/oneapi/compiler/2021.3.0/linux/bin/intel64:$PATH"
+export LD_LIBRARY_PATH="/opt/intel/oneapi/compiler/2021.3.0/linux/compiler/lib/intel64_lin:$LD_LIBRARY_PATH"
+
+# Export dos compiladores
+export CC=icc
+export CXX=icpc
+export F77=ifort
+export F90=ifort
+export FC=ifort
+export FCFLAGS="-m64"
+export FFLAGS="-m64"
+export CFLAGS="-fPIC"
+
+ulimit -s unlimited
+
+export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:/usr/lib64:/usr/lib32:/lib:/lib64:/lib32:$LD_LIBRARY_PATH"
+
+# Netcdf
+export NETCDF="$BUILD_LIBS/netcdf"
+export NETCDF_INCDIR="$NETCDF/include"
+export NETCDF_LIBDIR="$NETCDF/lib"
+export PATH="$NETCDF/bin:$PATH"
+export LD_LIBRARY_PATH="$NETCDF_LIBDIR:$LD_LIBRARY_PATH"
+
+# ECCODES
+export ECCODES="$BUILD_LIBS/eccodes"
+export PATH="$ECCODES/bin:$PATH"
+export LD_LIBRARY_PATH="$ECCODES/lib:$LD_LIBRARY_PATH"
+
+# CDO
+export CDO="$BUILD_LIBS/cdo"
+export PATH="$CDO/bin:$PATH"
+
+# MPICH
+export PATH="$BUILD_LIBS/mpich/bin:$PATH"
+export LD_LIBRARY_PATH="$BUILD_LIBS/mpich/lib:$LD_LIBRARY_PATH"
+
+# MPI Intel
+#export PATH="/opt/intel/oneapi/mpi/2021.3.0/bin:$PATH"
+#export LD_LIBRARY_PATH="/opt/intel/oneapi/mpi/2021.3.0/lib:$LD_LIBRARY_PATH"
+
+# OpenMPI
+#export PATH="$BUILD_LIBS/openmpi/bin:$PATH"
+#export LD_LIBRARY_PATH="$BUILD_LIBS/openmpi/lib:$LD_LIBRARY_PATH"
+
+# Livrarias
+export JASPERLIB="$BUILD_LIBS/lib"
+export JASPERINC="$BUILD_LIBS/include"
+export libpng="$BUILD_LIBS/lib"
+export zlib="$BUILD_LIBS/lib"
+export LD_LIBRARY_PATH="$JASPERLIB:$libpng:$zlib:$LD_LIBRARY_PATH"
+
+export WRFIO_NCD_LARGE_FILE_SUPPORT=1
+
+# Binários
+export PATH="$BUILD_LIBS/bin:$PATH"
+
+# NCARG
+export NCARG_ROOT="$BUILD_LIBS/ncarg"
+export PATH=$NCARG_ROOT/bin:$PATH
+export MANPATH=$NCARG_ROOT/man:$MANPATH
+
+#GRADS
+export PATH="/opt/opengrads:$PATH"
+

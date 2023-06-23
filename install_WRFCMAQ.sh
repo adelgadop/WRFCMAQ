@@ -11,23 +11,23 @@
 
 #> Installing WRF-CMAQ
 rm -rf CMAQ_REPO
-rm -rf ../WRF4.4CMAQv5.4
+rm -rf ../WRFCMAQv5.4
 
 git clone -b main https://github.com/USEPA/CMAQ.git CMAQ_REPO
 cd CMAQ_REPO
 git checkout -b my_branch
 
 #> Considerations
-export DIR="/opt/comp_ifort_2021"
+export DIR_LIB="/opt/comp_ifort_2021"
 
 #> Building and running in a user-specified directory outside of the repository
  # In the top level of CMAQ_REPO, the bldit_project.csh script will automatically replicate
  # the CMAQ folder structure and copy every build and run script out of the repository so
  # that you may modify them freely without version control.
 
-sed -i 's: set CMAQ_HOME = /home/username/path: set CMAQ_HOME = ${HOME}/WRFCMAQ:' bldit_project.csh
+sed -i 's: set CMAQ_HOME = /home/username/path: set CMAQ_HOME = ${HOME}/WRFCMAQv5.4:' bldit_project.csh
 ./bldit_project.csh
-export CMAQ_HOME="${HOME}/WRFCMAQ"
+export CMAQ_HOME="${HOME}/WRFCMAQv5.4"
 cd $CMAQ_HOME
 
 #> Setting and fixing config_cmaq.csh
@@ -35,12 +35,10 @@ cd $CMAQ_HOME
  # libraries into one directory. If you have done so, ok.
  # If you are using netCDF classic - no HDF5 compression then set the following environment variable:
 
- export NETCDF_classic=1
-
  #> I/O API, netcdf Library locations used in WRF-CMAQ
  sed -i 's:netcdf_root_intel:${NETCDF}:' config_cmaq.csh
- sed -i 's:ioapi_root_intel:${HOME}/LIBRARIES/ioapi-3.2:' config_cmaq.csh
- sed -i 's:setenv WRF_ARCH #:setenv WRF_ARCH 15 #:' config_cmaq.csh
+ sed -i 's:ioapi_root_intel:${HOME}/BLDLIB/ioapi-3.2:' config_cmaq.csh   # I/O API passed all tests
+ sed -i 's:setenv WRF_ARCH #:setenv WRF_ARCH 15 #:' config_cmaq.csh      # Ok according to the AMANAN system
  sed -i '86,86i\        setenv NETCDF_classic 1' config_cmaq.csh   # adding a new line
  sed -i '87,87i\        setenv WRF_CMAQ 1' config_cmaq.csh         # adding a new line
 
@@ -51,9 +49,9 @@ cd $CMAQ_HOME
  sed -i 's:netcdf_inc_intel:${NETCDF}/include:' config_cmaq.csh
  sed -i 's:netcdff_lib_intel:${NETCDF}/lib:' config_cmaq.csh
  sed -i 's:netcdff_inc_intel:${NETCDF}/include:' config_cmaq.csh
- sed -i 's:mpi_incl_intel:${DIR}/mpich/include:' config_cmaq.csh
- sed -i 's:mpi_lib_intel:${DIR}/mpich/lib:' config_cmaq.csh
- sed -i 's:setenv myFC mpiifort:setenv myFC mpifort:' config_cmaq.csh
+ sed -i 's:mpi_incl_intel:${DIR_LIB}/mpich/include:' config_cmaq.csh
+ sed -i 's:mpi_lib_intel:${DIR_LIB}/mpich/lib:' config_cmaq.csh
+ sed -i 's:setenv myFC mpiifort:setenv myFC ifort:' config_cmaq.csh
 
 #> Compiling WRF-CMAQ
  # MOdify the bldit_cctm.csh
