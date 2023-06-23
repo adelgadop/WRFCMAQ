@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ================================== Install WRF-CMAQ =====================================
-# Requirements: netCDF
+# Requirements: netCDF-C 4.7.4 & netCDF-fortran 4.5.3 from /opt/comp_ifort_2021 
 #               intel compiler
 #               mpich
 #               I/O API version 3.2
@@ -18,7 +18,9 @@ cd CMAQ_REPO
 git checkout -b my_branch
 
 #> Considerations
-export DIR_LIB="/opt/comp_ifort_2021"
+export DIR_LIB="/opt/comp_ifort_2021"               # Only works for AMANAN server with intel compiler
+LIBRARY_PATH="${HOME}/YOUR_FOLDER"                  # Find your library folder where I/O API were installed
+export HOME_IO="${LIBRARY_PATH}/ioapi-3.2"          # Path in which your I/O API was installed
 
 #> Building and running in a user-specified directory outside of the repository
  # In the top level of CMAQ_REPO, the bldit_project.csh script will automatically replicate
@@ -37,10 +39,14 @@ cd $CMAQ_HOME
 
  #> I/O API, netcdf Library locations used in WRF-CMAQ
  sed -i 's:netcdf_root_intel:${NETCDF}:' config_cmaq.csh
- sed -i 's:ioapi_root_intel:${HOME}/BLDLIB/ioapi-3.2:' config_cmaq.csh   # I/O API passed all tests
+ sed -i 's:ioapi_root_intel:${HOME_IO}:' config_cmaq.csh                 # I/O API passed all tests
+                                                                         # ${HOME_IO} is the path when the I/O API was 
+                                                                         # installed.
  sed -i 's:setenv WRF_ARCH #:setenv WRF_ARCH 15 #:' config_cmaq.csh      # Ok according to the AMANAN system
- sed -i '86,86i\        setenv NETCDF_classic 1' config_cmaq.csh   # adding a new line
- sed -i '87,87i\        setenv WRF_CMAQ 1' config_cmaq.csh         # adding a new line
+                                                                         # to install WRF-ARW, see details in 
+                                                                         # WRF guide installation.
+ sed -i '86,86i\        setenv NETCDF_classic 1' config_cmaq.csh         # adding a new line
+ sed -i '87,87i\        setenv WRF_CMAQ 1' config_cmaq.csh               # adding a new line to install WRF_CMAQ
 
  #> I/O API, netCDF, and MPI Library locations used in CMAQ
  sed -i 's:ioapi_inc_intel:${IOAPI}/ioapi/fixed_src:' config_cmaq.csh
@@ -59,5 +65,7 @@ cd $CMAQ_HOME
  sed -i "84s/#set/set/g" bldit_cctm.csh
 
 #> Run the bldit_cctm,csh script
-./bldit_cctm.csh intel |& tee bldit_cctm_twoway.log
+./bldit_cctm.csh intel |& tee bldit_cctm_twoway.log   # See and the end if the executable were created 
+ls BLD_WRFv4.4_CCTM_v54_intel/main/*.exe              # if ndown.exe, real.exe, tc.exe and wrf.exe 
+                                                      # were created, so you've installed the WRF-CMAQ 
 

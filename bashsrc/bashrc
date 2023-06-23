@@ -12,21 +12,6 @@ export PATH
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
-# aliases and functions
-alias ftpiag="ftp masterftp.iag.usp.br"
-export DATA="/home/alejandro/data"
-export WPS="/home/alejandro/WPS-4.4"
-export WRF="/home/alejandro/WRFV3/test/em_real"
-export wrf="/home/alejandro/WRFv391/test/em_real"
-export SOPRO="/home/alejandro/projects/sopro"
-export PAPILA="/home/alejandro/projects/papila"
-export MEGAN="/home/alejandro/util/megan"
-export ANTHRO="/home/alejandro/util/ANTHRO/src"
-export FINN="/home/alejandro/util/finn/src"
-export MOZBC="/home/alejandro/util/mozbc"
-export WES="/home/alejandro/util/wes_coldens"
-export egu="/home/alejandro/projects/EGU2023"
-
 ulimit -s unlimited
 ulimit -n 4096
 source /home/alejandro/LIBRARIES/bashrc.opt-ifort_2021
