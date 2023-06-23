@@ -18,9 +18,10 @@ cd CMAQ_REPO
 git checkout -b my_branch
 
 #> Considerations
-export DIR_LIB="/opt/comp_ifort_2021"               # Only works for AMANAN server with intel compiler
+export DIR="/opt/comp_ifort_2021"                   # Only works for AMANAN server with intel compiler
 LIBRARY_PATH="${HOME}/YOUR_FOLDER"                  # Find your library folder where I/O API were installed
 export HOME_IO="${LIBRARY_PATH}/ioapi-3.2"          # Path in which your I/O API was installed
+export NETCDF_classic=1
 
 #> Building and running in a user-specified directory outside of the repository
  # In the top level of CMAQ_REPO, the bldit_project.csh script will automatically replicate
@@ -55,8 +56,8 @@ cd $CMAQ_HOME
  sed -i 's:netcdf_inc_intel:${NETCDF}/include:' config_cmaq.csh
  sed -i 's:netcdff_lib_intel:${NETCDF}/lib:' config_cmaq.csh
  sed -i 's:netcdff_inc_intel:${NETCDF}/include:' config_cmaq.csh
- sed -i 's:mpi_incl_intel:${DIR_LIB}/mpich/include:' config_cmaq.csh
- sed -i 's:mpi_lib_intel:${DIR_LIB}/mpich/lib:' config_cmaq.csh
+ sed -i 's:mpi_incl_intel:${DIR}/mpich/include:' config_cmaq.csh
+ sed -i 's:mpi_lib_intel:${DIR}/mpich/lib:' config_cmaq.csh
  sed -i 's:setenv myFC mpiifort:setenv myFC ifort:' config_cmaq.csh
 
 #> Compiling WRF-CMAQ
