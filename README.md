@@ -36,7 +36,28 @@ On the other hand, if your `.bashrc` has commented lines such as `# export WRF_C
 
 ```
 
-If there is nothing to see, so you are right.
+If there is nothing to see, you are right.
+
+## Installation of Meteorology-Chemistry Interface Processor (MCIP)
+The Meteorology-Chemistry Interface Processor (MCIP) ingests output from the Weather Research and Forecasting (WRF) Model to prepare the meteorology files used within the CMAQ Modeling System. The MCIP output is also helpful for creating SMOKE emission files considering global emissions from CAMS and EDGAR. We can install the MCIP if we have installed the I/O API and the netCDF, successfully. The installation steps are:
+
+- Create an alias called "lib" in your I/O API directory that it has been installed previously. `ln -sf ~/BLDLIB/ioapi-3.2/Linux2_x86_64ifort lib`
+- Go to `/home/alejandro/WRFCMAQv5.4/PREP/mcip/src`
+- Open the Makefile. I used `vi Makefile`to open it.
+
+```shell
+49 #...Intel Fortran                                                                                 
+50 FC      = ifort                                                                 
+51 NETCDF = /opt/comp_ifort_2021/netcdf                                            
+52 IOAPI_ROOT = /home/alejandro/BLDLIB/ioapi-3.2                                   
+53 ###FFLAGS  = -g -O0 -check all -C -traceback -FR -I$(NETCDF)/include  \         
+54 ###          -I$(IOAPI_ROOT)/Linux2_x86_64ifort                                 
+55 FFLAGS  = -O3 -traceback -FR -I$(NETCDF)/include -I$(IOAPI_ROOT)/Linux2_x86_64ifort
+56 LIBS    = -L$(IOAPI_ROOT)/lib -lioapi \                                         
+57           -L$(NETCDF)/lib -lnetcdff -lnetcdf
+```
+- Close Makefile and install the MCIP with `make |& tee make.mcip.log`
+- Verify if the `mcip.exe` was created.
 
 # Acknowledgment
 Thank you to the US EPA for creating WRF-CMAQ and to the CMAS Center (https://cmascenter.org/) for developing the I/O API v3.2 program.
