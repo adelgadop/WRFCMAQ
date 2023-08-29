@@ -39,13 +39,13 @@ On the other hand, if your `.bashrc` has commented lines such as `# export WRF_C
 If there is nothing to see, you are right.
 
 ## Installation of Meteorology-Chemistry Interface Processor (MCIP)
-The Meteorology-Chemistry Interface Processor (MCIP) ingests output from the Weather Research and Forecasting (WRF) Model to prepare the meteorology files used within the CMAQ Modeling System. The MCIP output is also helpful for creating SMOKE emission files considering global emissions from CAMS and EDGAR. We can install the MCIP if we have installed the I/O API and the netCDF, successfully. The installation steps are:
+The Meteorology-Chemistry Interface Processor (MCIP) ingests output from the Weather Research and Forecasting (WRF) Model to prepare the meteorology files used within the CMAQ Modeling System. However, WRF-CMAQ coupled model doesn't require the MCIP program, because it can create the GRIDDESC and other files (METCRO2D...). The MCIP output is also helpful for creating SMOKE emission files considering global emissions from CAMS and EDGAR. We can install the MCIP if we have installed the I/O API and the netCDF, successfully. The installation steps are:
 
 - Create an alias called "lib" in your I/O API directory that it has been installed previously. `ln -sf ~/BLDLIB/ioapi-3.2/Linux2_x86_64ifort lib`
 - Go to `/home/alejandro/WRFCMAQv5.4/PREP/mcip/src`
 - Open the Makefile. I used `vi Makefile`to open it.
 
-```shell
+```
 49 #...Intel Fortran                                                                                 
 50 FC      = ifort                                                                 
 51 NETCDF = /opt/comp_ifort_2021/netcdf                                            
@@ -58,6 +58,24 @@ The Meteorology-Chemistry Interface Processor (MCIP) ingests output from the Wea
 ```
 - Close Makefile and install the MCIP with `make |& tee make.mcip.log`
 - Verify if the `mcip.exe` was created.
+
+## Building the BCON executable
+1. Go to the directory that contains the BCON scripts:
+```
+csh
+cd $CMAQ_HOME/PREP/bcon/scripts
+./bldit_bcon.csh intel |& tee make_bcon.log
+```
+Look for the executable **BCON_v54.exe** in the $CMAQ_HOME/PREP/bcon/scripts/BLD_BCON_v54_intel directory to see if the build script completed successfully.
+
+## Building the ICON executable
+1. Go to the directory that contains the BCON scripts:
+```
+csh
+cd $CMAQ_HOME/PREP/icon/scripts
+./bldit_icon.csh intel |& tee make_icon.log
+```
+Look for the executable **ICON_v54.exe** in the $CMAQ_HOME/PREP/bcon/scripts/BLD_ICON_v54_intel directory to see if the build script completed successfully.
 
 # Acknowledgment
 Thank you to the US EPA for creating WRF-CMAQ and to the CMAS Center (https://cmascenter.org/) for developing the I/O API v3.2 program.
