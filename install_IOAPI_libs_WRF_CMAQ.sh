@@ -9,7 +9,7 @@
 # ===================================================================================
 
 # Considerations
-LIBRARY_PATH="${HOME}/YOUR_FOLDER"                  # Make your directory or replace 
+LIBRARY_PATH="${HOME}/BLDLIB"                  # Make your directory or replace 
                                                     # YOUR_FOLDER with a folder created 
                                                     # (e.g., LIBRARIES if your path is /home/alejandro/LIBRARIES)
 rm -rf ${LIBRARY_PATH}/ioapi-3.2                    # Removing previous versions
