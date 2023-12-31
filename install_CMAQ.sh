@@ -19,6 +19,7 @@ git checkout -b my_branch
 
 #> Considerations
 export DIR="/opt/comp_ifort_2021"                   # Only works for AMANAN server with intel compiler
+export NETCDF_classic=1
 
 #> Building and running in a user-specified directory outside of the repository
  # In the top level of CMAQ_REPO, the bldit_project.csh script will automatically replicate
@@ -30,12 +31,8 @@ sed -i 's: set CMAQ_HOME = /home/username/path: set CMAQ_HOME = ${HOME}/CMAQv5.4
 export CMAQ_HOME="${HOME}/CMAQv5.4"
 
 # We only can compile CMAQ with OpenMPI that it is needed include in your ~/.bashrc
-export PATH="$DIR/openmpi/bin:$PATH"
-export LD_LIBRARY_PATH="$DIR/openmpi/lib:$LD_LIBRARY_PATH"
-
-which mpifort
-which mpicc
-# I didn't have successful when I tried to compile with MPICH, so with OpenMPI yes
+#export PATH="$DIR/openmpi/bin:$PATH"
+#export LD_LIBRARY_PATH="$DIR/openmpi/lib:$LD_LIBRARY_PATH"
 
 cd $CMAQ_HOME
 
@@ -60,11 +57,12 @@ cd $CMAQ_HOME
  sed -i 's:netcdf_inc_intel:${NETCDF}/include:' config_cmaq.csh
  sed -i 's:netcdff_lib_intel:${NETCDF}/lib:' config_cmaq.csh
  sed -i 's:netcdff_inc_intel:${NETCDF}/include:' config_cmaq.csh
- sed -i 's:mpi_incl_intel:${DIR}/openmpi/include:' config_cmaq.csh
- sed -i 's:mpi_lib_intel:${DIR}/openmpi/lib:' config_cmaq.csh
- sed -i 's:setenv myFC mpiifort:setenv myFC mpifort:' config_cmaq.csh
+ sed -i 's:mpi_incl_intel:${DIR}/mpich/include:' config_cmaq.csh
+ sed -i 's:mpi_lib_intel:${DIR}/mpich/lib:' config_cmaq.csh
+ sed -i 's:setenv myFC mpiifort:setenv myFC mpif90:' config_cmaq.csh
  sed -i 's:setenv myCC icc:setenv myCC mpicc' config_cmaq.csh
  sed -i 's:setenv netcdf_lib "-lnetcdf":setenv netcdf_lib "-lnetcdff -lnetcdf":' config_cmaq.csh
+ sed -i 's:setenv mpi_lib "-lmpi":setenv mpi_lib "-lmpich":' config_cmaq.csh
 
 #> Compiling CCTM
  # Modify the bldit_cctm.csh
