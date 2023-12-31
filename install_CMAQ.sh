@@ -9,7 +9,7 @@
 # Date: December 2023
 # =============================================================================
 
-#> Installing WRF-CMAQ
+#> Installing CMAQ and MCIP, BCON and ICON
 rm -rf CMAQ_REPO
 rm -rf ../CMAQv5.4
 
